@@ -70,13 +70,15 @@ public class Exercise05_AcceptPackage {
     acceptPackage(50, 4, 5, 10, true) ➔ false
      */
     public boolean acceptPackage(int weightPounds, int lengthInches, int widthInches, int heightInches, boolean isSurchargePaid) {
-        if (isSurchargePaid && (lengthInches > MAX_DIMENSION_INCHES || widthInches > MAX_DIMENSION_INCHES || heightInches > MAX_DIMENSION_INCHES)) {
+        boolean surchargeAmount;
+        if (weightPounds <= MAX_WEIGHT_POUNDS && (lengthInches * widthInches * heightInches) <= MAX_CUBIC_INCHES) {
             return true;
         }
-        if (weightPounds >= MAX_WEIGHT_POUNDS || (lengthInches * widthInches * heightInches) >= MAX_CUBIC_INCHES) {
-            return true;
-        }
+        if (lengthInches < MAX_DIMENSION_INCHES || widthInches < MAX_DIMENSION_INCHES || heightInches < MAX_DIMENSION_INCHES && isSurchargePaid) {
+
+            }
+
+
         return false;
     }
-
 }
