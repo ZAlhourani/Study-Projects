@@ -9,7 +9,9 @@ public class Exercises {
 	 helloName("X") → "Hello X!"
 	 */
 	public String helloName(String name) {
-		return null;
+		String newString = "Hello " + name + "!";
+
+		return newString;
 	}
 
 	/*
@@ -55,7 +57,9 @@ public class Exercises {
 	 extraEnd("Hi") → "HiHiHi"
 	 */
 	public String extraEnd(String str) {
-		return null;
+		String last2 = str.substring(str.length()-2);
+
+		return last2 + last2 + last2;
 	}
 
 	/*

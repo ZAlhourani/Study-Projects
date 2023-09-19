@@ -5,11 +5,11 @@ import java.util.Scanner;
 public class StoreOpenReporter {
 
     public static void main(String[] args) {
-        Scanner keyboard = new Scanner(System.in);
+        Scanner keyboard = new Scanner(System.in); // create a scanner (reading data from stream) (Capture user's input)
 
         System.out.println("Please provide the current hour (in military time e.g. 13 is 1pm): ");
-        String userInput = keyboard.nextLine();
-        int currentHour = Integer.parseInt(userInput);
+        String userInput = keyboard.nextLine(); // user input (note: we put as a String no matter what's data type.
+        int currentHour = Integer.parseInt(userInput); // this converts String to Integers.
 
         System.out.println("Please provide the current day (e.g. M is Monday): ");
         userInput = keyboard.nextLine();
@@ -55,7 +55,6 @@ public class StoreOpenReporter {
                 return currentHour >= 9 && currentHour < 15;
             }
         }
-
         return false;
     }
 }
