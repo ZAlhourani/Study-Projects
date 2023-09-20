@@ -165,7 +165,7 @@ public class Lecture {
 			//indices.insert(0, i); // put value of i at the beginning
 		}
 
-		String result = indices.toString().trim();
+		String result = indices.toString().trim(); // this brings back the new stringBuilder to String.
 
 		// " 0 1 2 3 4 5 6 7 8 ... 50"
 	}

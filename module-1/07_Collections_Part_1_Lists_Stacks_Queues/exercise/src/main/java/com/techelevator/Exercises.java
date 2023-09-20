@@ -37,7 +37,15 @@ public class Exercises {
 	 no4LetterWords( {"Jack", "Jill", "Jane", "John", "Jim"} )  ->  ["Jim"]
 	 */
 	public List<String> no4LetterWords(String[] stringArray) {
-		return null;
+		List<String> list = new ArrayList<>();
+
+		for (int i = 0; i < stringArray.length; i++) {
+
+			if (stringArray[i].length() != 4) {
+				list.add(stringArray[i]);
+			}
+		}
+		return list;
 	}
 
 	/*

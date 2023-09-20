@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import java.util.Stack;
+
 public class Stacks {
     /*
 		Example challenge questions:
@@ -26,4 +28,17 @@ public class Stacks {
 			Open brackets must be closed in the correct order.
 			Every close bracket has a corresponding open bracket of the same type.
 		 */
+
+    public static void main(String[] args) {
+
+        // Create a Stack
+        Stack<String> urls = new Stack<>();
+
+        urls.push("https://techelevator.com");
+        urls.push("https://google.com");
+        urls.push("https://espn.com");
+
+
+
+    }
 }
