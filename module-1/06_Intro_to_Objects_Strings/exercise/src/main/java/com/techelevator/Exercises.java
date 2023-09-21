@@ -427,7 +427,19 @@ public class Exercises {
 	 last2("xxxx") -> 2
 	 */
 		public int last2 (String str){
-			return 0;
+			String last2Chars = str.substring(str.length()-2);
+
+			int countOfMatches =0;
+
+			for (int i = 0; i < str.length() - 2; i++) {
+
+				String curr2Chars = str.substring(i, i +2);
+
+				if (curr2Chars.equals(last2Chars)) {
+					countOfMatches ++;
+				}
+			}
+			return countOfMatches;
 		}
 
 	/*
