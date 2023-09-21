@@ -175,11 +175,18 @@ public class Exercises {
 
 		List<Integer> newList = new ArrayList<>();
 
-		for (Integer num : listOne) {
-			newList.add(num);
-		}
-		for (Integer num2 : listTwo) {
-			newList.add(num2);
+		int sizeOne = listOne.size();
+
+		int sizeTwo = listTwo.size();
+
+		int arraySize = (sizeOne + sizeTwo);
+		for(int i = 0; i < arraySize; i++) {
+			if(i < sizeOne) {
+				newList.add(listOne.get(i));
+			}
+			if(i < sizeTwo) {
+				newList.add(listTwo.get(i));
+			}
 		}
 		return newList;
 	}
