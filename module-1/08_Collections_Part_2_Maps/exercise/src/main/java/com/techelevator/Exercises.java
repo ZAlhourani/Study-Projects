@@ -146,9 +146,30 @@ public class Exercises {
 	 * wordMultiple(["c", "b", "a"]) → {"b": false, "c": false, "a": false}
 	 * wordMultiple(["c", "c", "c", "c"]) → {"c": true}
 	 *
+	 *
+	 * ["a", "b", "a", "c", "b"]
+	 *                      ^
+	 *
+	 * map ->
+	 * {
+	 *  a -> true
+	 *  b -> true
+	 *  c -> false
+	 * }
+	 *
 	 */
 	public Map<String, Boolean> wordMultiple(String[] words) {
-		return null;
+		Map<String, Boolean> map = new HashMap<>();
+
+		for (String word : words) {
+			if (map.containsKey(word)) {
+				map.put(word, true);
+			} else {
+				map.put(word, false);
+			}
+		}
+
+		return map;
 	}
 
 	/*
@@ -160,10 +181,39 @@ public class Exercises {
 	 * consolidateInventory({"SKU1": 100, "SKU2": 53, "SKU3": 44} {"SKU2":11, "SKU4": 5})
 	 * 	 → {"SKU1": 100, "SKU2": 64, "SKU3": 44, "SKU4": 5}
 	 *
+	 *
+	 * main 	-> {"SKU1": 100, "SKU2": 53, "SKU3": 44}
+	 * 					                        ^
+	 *
+	 * remote	-> {"SKU2":11, "SKU4": 5}
+	 * 					          ^
+	 *
+	 * consolidated -> { "SKU1": 100  "SKU2": 64 "SKU3": 44 "SKU4": 5 }
 	 */
+	
 	public Map<String, Integer> consolidateInventory(Map<String, Integer> mainWarehouse,
 			Map<String, Integer> remoteWarehouse) {
-		return null;
+
+		Map<String, Integer> consolidated = new HashMap<>();
+
+		for (Map.Entry<String, Integer> mainEntry : mainWarehouse.entrySet()) {
+			if (remoteWarehouse.containsKey(mainEntry.getKey())) {
+				Integer remoteValue = remoteWarehouse.get(mainEntry.getKey());
+				Integer mainValue = mainEntry.getValue();
+
+				consolidated.put(mainEntry.getKey(), mainValue + remoteValue);
+			} else {
+				consolidated.put(mainEntry.getKey(), mainEntry.getValue());
+			}
+		}
+
+		for (Map.Entry<String, Integer> remoteEntry : remoteWarehouse.entrySet()) {
+			if (!consolidated.containsKey(remoteEntry.getKey())) {
+				consolidated.put(remoteEntry.getKey(), remoteEntry.getValue());
+			}
+		}
+
+		return consolidated;
 	}
 
 	/*
