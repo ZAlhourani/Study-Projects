@@ -2,19 +2,20 @@ package com.techelevator;
 
 public class Bid {
 
-	private String bidder;
-	private int bidAmount;
+    private final String bidder;
+    private final int amount;
 
-	public Bid(String bidder, int bidAmount) {
-		this.bidder = bidder;
-		this.bidAmount = bidAmount;
-	}
 
-	public String getBidder() {
-		return bidder;
-	}
+    public Bid(String bidder, int amount) {
+        this.bidder = bidder;
+        this.amount = amount;
+    }
 
-	public int getBidAmount() {
-		return bidAmount;
-	}
+    public String getBidder() {
+        return bidder;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
 }

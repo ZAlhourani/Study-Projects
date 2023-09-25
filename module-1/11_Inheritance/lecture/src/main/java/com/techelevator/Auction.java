@@ -1,39 +1,54 @@
 package com.techelevator;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Auction {
+    private final String auctionItem;
+    private final List<Bid> allBids = new ArrayList<>();
+    private Bid currentWinningBid = new Bid("", 0);
 
-	private String itemForSale;
-	private Bid currentHighBid;
-	private List<Bid> allBids;
+    private LocalDateTime endDateTime;
 
-	public Auction(String itemForSale) {
-		this.itemForSale = itemForSale;
-		this.currentHighBid = new Bid("", 0);
-		allBids = new ArrayList<>();
-	}
+    public Auction(String auctionItem) {
+        this.auctionItem = auctionItem;
+        this.endDateTime = LocalDateTime.now().plusDays(7);
+    }
 
-	public boolean placeBid(Bid offeredBid) {
-		allBids.add(offeredBid);
-		boolean isCurrentWinningBid = false;
-		if (offeredBid.getBidAmount() > currentHighBid.getBidAmount()) {
-			currentHighBid = offeredBid;
-			isCurrentWinningBid = true;
-		}
-		return isCurrentWinningBid;
-	}
+    public Auction(String auctionItem, LocalDateTime endDateTime) {
+        this.auctionItem = auctionItem;
+        this.endDateTime = endDateTime;
+    }
 
-	public Bid getHighBid() {
-		return currentHighBid;
-	}
+    public String getAuctionItem() {
+        return auctionItem;
+    }
 
-	public List<Bid> getAllBids() {
-		return new ArrayList<>(allBids);
-	}
+    public Bid getCurrentWinningBid() {
+        return currentWinningBid;
+    }
 
-	public String getItemForSale() {
-		return itemForSale;
-	}
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
+    }
+
+    public boolean hasAuctionEnded() {
+       return LocalDateTime.now().isAfter(endDateTime);
+    }
+
+    public boolean placeBid(Bid attemptedBid) {
+
+        if (hasAuctionEnded()) {
+            return false;
+        }
+
+        allBids.add(attemptedBid);
+
+        if (currentWinningBid == null || attemptedBid.getAmount() > currentWinningBid.getAmount()) {
+            currentWinningBid = attemptedBid;
+            return true;
+        }
+        return false;
+    }
 }
