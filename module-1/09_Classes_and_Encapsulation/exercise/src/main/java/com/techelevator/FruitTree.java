@@ -4,28 +4,29 @@ public class FruitTree {
     private String typeOfFruit;
     private int piecesOfFruitLeft;
 
-    private int startingPiecesOfFruit;
 
-    public FruitTree (String typeOfFruit, int startingPiecesOfFruit) {
+
+
+    public FruitTree(String typeOfFruit, int piecesOfFruitLeft) {
         this.typeOfFruit = typeOfFruit;
-        this.startingPiecesOfFruit = startingPiecesOfFruit;
+        this.piecesOfFruitLeft = piecesOfFruitLeft;
     }
 
     public String getTypeOfFruit() {
         return typeOfFruit;
     }
-    public int getStartingPiecesOfFruit() {
-        return startingPiecesOfFruit;
+
+    public int getPiecesOfFruitLeft() {
+        return piecesOfFruitLeft;
     }
 
-    public String pickFruit (int numberOfPiecesToRemove) {
-        if (piecesOfFruitLeft > startingPiecesOfFruit) {
-            piecesOfFruitLeft = piecesOfFruitLeft - numberOfPiecesToRemove;
-        }else if (piecesOfFruitLeft < numberOfPiecesToRemove);
-        return "false";
+   public boolean pickFruit(int numberOfPiecesToRemove) {
+        if (piecesOfFruitLeft >= numberOfPiecesToRemove) {
+            piecesOfFruitLeft -=  numberOfPiecesToRemove;
+            return true;
+
+        }
+            return false;
+
     }
-
-
-
-
 }
