@@ -54,9 +54,11 @@ public class Exercise02_BoardingGate {
         int seatCount = 0;
 
         for (int i = 0; i < seatingChart.length; i++) {
-            if (seatingChart[i] == true); {
+            if (seatingChart[i]); {
                 seatCount++;
+
             }
+            return seatCount;
         }
         return seatCount;
 
