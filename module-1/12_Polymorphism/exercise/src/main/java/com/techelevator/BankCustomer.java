@@ -49,7 +49,9 @@ public class BankCustomer {
         for (Accountable allAccounts : accounts) {
             bankAccountsSum += allAccounts.getBalance();
         }
-        return bankAccountsSum >= 25000;
-
+        if (bankAccountsSum >= 25000) {
+            return true;
+        }
+        return false;
     }
 }
