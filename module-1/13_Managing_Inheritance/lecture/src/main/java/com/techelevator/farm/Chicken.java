@@ -9,4 +9,9 @@ public class Chicken extends FarmAnimal {
     public Egg layEgg() {
         return new Egg();
     }
+
+    @Override
+    public String eat() {
+        return "Bugs & Seeds";
+    }
 }

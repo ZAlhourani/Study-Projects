@@ -70,6 +70,7 @@ public class OldMacdonald {
 		for (FarmAnimal animal : allAnimals) {
 			String name = animal.getName();
 			String sound = animal.getSound();
+			String whatDoYouEat = animal.eat();
 
 			if (animal instanceof Chicken) {
 				Chicken chickeee = (Chicken) animal;
