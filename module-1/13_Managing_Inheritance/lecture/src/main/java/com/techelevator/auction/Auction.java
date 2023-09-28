@@ -31,6 +31,10 @@ public class Auction {
         return endDateTime;
     }
 
+    protected void addBid(Bid bidToAdd) {
+        allBids.add(bidToAdd);
+    }
+
     public boolean hasAuctionEnded() {
         return LocalDateTime.now().isAfter(endDateTime);
     }

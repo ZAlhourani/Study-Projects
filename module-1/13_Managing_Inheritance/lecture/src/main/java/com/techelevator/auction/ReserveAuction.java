@@ -24,6 +24,9 @@ public class ReserveAuction extends Auction {
     public boolean placeBid(Bid attemptedBid) {
         // if the reserve price is not met, return false
         if (attemptedBid.getAmount() < reservePrice) {
+            // add the bid
+
+            addBid(attemptedBid);
             return false;
         }
 
