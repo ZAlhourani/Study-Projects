@@ -45,6 +45,10 @@ public class BankAccount implements Accountable {
     }
 
     public int transferFunds(BankAccount destination, int amountToTransfer) {
+        if (destination == null) {
+            return balance;
+        }
+
         this.withdraw(amountToTransfer);
         destination.deposit(amountToTransfer);
         return balance;
