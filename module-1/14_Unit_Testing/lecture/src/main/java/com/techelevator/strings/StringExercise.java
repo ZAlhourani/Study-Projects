@@ -11,6 +11,10 @@ public class StringExercise {
 	 hasBad("xxbadxx") → false
 	 */
     public boolean hasBad(String str) {
-        return false;
+
+        return str != null && (str.startsWith("bad") || str.indexOf("bad") == 1);
+
+
     }
 }
+
