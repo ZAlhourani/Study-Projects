@@ -49,7 +49,10 @@ public class BankCustomer {
         int total = 0;
         for (Accountable account : accounts) {
             total += account.getBalance();
+            if (total >= 25_000) {
+                return true;
+            }
         }
-        return total >= 25_000;
+        return false;
     }
 }
