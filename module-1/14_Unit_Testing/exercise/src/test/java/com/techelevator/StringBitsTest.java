@@ -4,15 +4,42 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class StringBitsTest {
+
+    StringBits sut = new StringBits();
+
     @Test
 
-    public void getBits_returns_empty_string_not_giving_null () {
+    public void getBits_returns_Hlo_string_giving_Hello() {
 
-        StringBits sut = new StringBits();
-        String getBits = sut.getBits(null);
+        String str = "Hello";
 
-        Assert.assertNull(getBits);
+        String getBits = sut.getBits(str);
 
+        Assert.assertEquals("Hlo", getBits);
 
     }
+
+    @Test
+
+    public void getBits_returns_H_string_giving_Hi() {
+
+        String str = "Hi";
+
+        String getBits = sut.getBits(str);
+
+        Assert.assertEquals("H", getBits);
+
+    }
+
+    @Test
+
+    public void getBits_returns_Hello_string_giving_Heeololeo() {
+
+        String str = "Heeololeo";
+
+        String getBits = sut.getBits(str);
+
+        Assert.assertEquals("Hello", getBits);
+    }
 }
+

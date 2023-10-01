@@ -72,8 +72,11 @@ public class BankCustomerTest {
 
         // assert
         Assert.assertTrue(isVip);
+        Assert.assert
 
     }
+
+
 
 
 }
