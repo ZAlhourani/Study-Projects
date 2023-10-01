@@ -8,7 +8,7 @@ public class DateFashionTest {
     private DateFashion dateFashion = new DateFashion();
 
     @Test
-    public void getATable_should_returns_2_is_either_is_8_or_above() {
+    public void getATable_should_returns_2_if_either_is_8_or_above() {
 
         int youAndDate = dateFashion.getATable(5, 10);
 
@@ -17,7 +17,7 @@ public class DateFashionTest {
     }
 
     @Test
-    public void getATable_should_returns_0_is_either_is_less_than_8() {
+    public void getATable_should_returns_0_if_either_is_less_than_8() {
 
         int youAndDate = dateFashion.getATable(5, 2);
 

@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class FrontTimesTest {
 
-    FrontTimes frontTimes = new FrontTimes();
+   private FrontTimes frontTimes = new FrontTimes();
 
     @Test
 

@@ -26,6 +26,6 @@ public class SameFirstLastTest {
 
         boolean isItTheSame = sameFirstLast.isItTheSame(inputArray);
 
-        Assert.assertFalse(isItTheSame);
+        Assert.assertTrue(isItTheSame);
     }
 }

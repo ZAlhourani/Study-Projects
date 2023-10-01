@@ -15,10 +15,9 @@ public class MaxEnd3Test {
         int[] inputArray = {1, 2, 3};
         int[] expectedArray = {3, 3, 3};
 
-        int [] newArray = maxEnd3.makeArray(inputArray);
+        int[] newArray = maxEnd3.makeArray(inputArray);
 
         Assert.assertArrayEquals(expectedArray,inputArray);
     }
-
 
 }
