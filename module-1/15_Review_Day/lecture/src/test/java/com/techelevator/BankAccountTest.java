@@ -6,32 +6,35 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BankAccountTest {
-
-    private static final int STARTING_BALANCE = 100;
     private BankAccount sut;
     @Before
-    public void setup() {
-        sut = new BankAccount("", "", STARTING_BALANCE);
+    private void setSut() {
+        sut = new BankAccount("", "", 100);
     }
 
-
     @Test
+
     public void deposit_is_not_accepted_given_negative() {
+
         // arrange
-//        BankAccount sut = new BankAccount("", "");
+
+        BankAccount sut = new BankAccount("", "");
 
         // act
-        int resultingBalance = sut.deposit(-10);
+        int resultingBalance = sut.deposit((-10));
 
         // assert
-        Assert.assertEquals("The balance returned by the deposit method should be " + STARTING_BALANCE, STARTING_BALANCE, resultingBalance);
-        Assert.assertEquals("The balance returned by the deposit method should match getBalance", STARTING_BALANCE, sut.getBalance());
+        Assert.assertEquals("The balance returned by the deposit method should be 0", 0, resultingBalance);
+        Assert.assertEquals("The balance returned by the deposit method should match getBalance", 0, sut.getBalance());
     }
 
     @Test
-    public void deposit_is_accepted_given_positive() {
+
+    public void deposit_is_not_accepted_given_positive() {
+
         // arrange
-//        BankAccount sut = new BankAccount("", "", 100);
+
+        BankAccount sut = new BankAccount("", "", 100);
 
         // act
         int resultingBalance = sut.deposit(10);
@@ -41,18 +44,22 @@ public class BankAccountTest {
         Assert.assertEquals("The balance returned by the deposit method should match getBalance", 110, sut.getBalance());
     }
 
-
     @Test
-    public void transferFunds_rejects_transaction_given_null_destination() {
+
+    public void deposit_is_not_accepted_given_null_destination() {
+
         // arrange
+
         BankAccount destination = null;
 
         // act
         int myResultingBalance = sut.transferFunds(destination, 10);
 
         // assert
-        Assert.assertEquals(STARTING_BALANCE, myResultingBalance);
-        Assert.assertEquals(STARTING_BALANCE, sut.getBalance());
+        Assert.assertEquals(100, myResultingBalance);
+        Assert.assertEquals(100, sut.getBalance());
     }
-
 }
+
+
+
