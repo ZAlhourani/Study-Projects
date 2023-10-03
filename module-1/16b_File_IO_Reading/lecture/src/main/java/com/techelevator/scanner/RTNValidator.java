@@ -8,14 +8,33 @@ public class RTNValidator {
 	
 	private static final int[] CHECKSUM_WEIGHTS = new int[] { 3, 7, 1, 3, 7, 1, 3, 7, 1 };
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) {
 
 		printApplicationBanner();
-		
+
 		File inputFile = getInputFileFromUser();
 
-	}
+		try(Scanner fileScanner = new Scanner(inputFile)) {
 
+			while (fileScanner.hasNext()) {
+				String line = fileScanner.nextLine();
+				boolean isValid = checksumIsValid(line);
+				if (isValid) {
+					System.out.println(line + " is valid!");
+				} else {
+					System.out.println(line + " is invalid!");
+				}
+			}
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Sorry the file was no able to be opened.");
+		}
+/*		finally {
+			if (fileScanner != null)
+			fileScanner.close();
+
+		}*/
+	}
 	private static void printApplicationBanner() {
 		System.out.println("******************");
 		System.out.println("RTN Validator 9000");
