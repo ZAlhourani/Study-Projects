@@ -61,8 +61,6 @@ public class WordSearch {
 					lineNumber++;
 				}
 
-
-
 		} catch(FileNotFoundException e) {
 				System.out.println("Error: File not found. Please check the file path and try again.");
 

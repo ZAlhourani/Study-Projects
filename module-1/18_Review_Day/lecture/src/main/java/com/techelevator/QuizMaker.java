@@ -15,6 +15,33 @@ public class QuizMaker {
 	public void run() {
 		/* Your code goes here */
 
+		System.out.println("Enter the name of the quiz.");
+		String quizName = userInput.nextLine();
+
+		QuizBuilder quizBuilder = new QuizBuilder();
+		Quiz quiz =  quizBuilder.build(quizName);
+
+		for (Question question : quiz.getQuestions()) {
+
+			System.out.println(question.getQuestionText());
+
+			int questionIndex = 1;
+			for (String answerOption : question.getAnswerOptions()) {
+				System.out.println(questionIndex + ". " + answerOption);
+				questionIndex++;
+			}
+
+			System.out.println(question);
+
+			System.out.println("Enter your answer: ");
+			int userAnswer = Integer.parseInt(userInput.nextLine());
+
+			if (question.isCorrectAnswer(userAnswer)) {
+				System.out.println("RIGHT");
+			}else {
+				System.out.println("Sorry, Incorrect");
+			}
+		}
 
 	}
 
