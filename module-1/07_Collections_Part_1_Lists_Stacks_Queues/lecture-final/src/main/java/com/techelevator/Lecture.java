@@ -208,8 +208,6 @@ public class Lecture {
 
 		3) Given two integer lists, determine if there is a way to divide the lists into two lists with equal sums.
 		   Return true or false.
-
 		 */
-
 	}
 }
