@@ -8,6 +8,6 @@ from movie
 right join movie_actor on movie_actor.movie_id = movie.movie_id
 right join person on person_id = movie_actor.actor_id
 where person_name like 'George %'
-group by person_name
+group by person_id
 order by person_name asc;
 
