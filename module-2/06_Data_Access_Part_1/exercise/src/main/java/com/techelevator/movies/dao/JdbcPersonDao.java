@@ -80,9 +80,10 @@ public class JdbcPersonDao implements PersonDao {
 
         List<Person> personCollection = new ArrayList<>();
 
-        String sql = "select distinct person_id, person_name from person " +
-                "join movie on movie.director_id = person.person_id " +
-                "join collection on movie.collection_id = collection.collection_id " +
+        String sql = "select distinct person.* from person " +
+                "join movie_actor on actor_id = person_id " +
+                "join movie using (movie_id) " +
+                "join collection using (collection_id)" +
                 "where collection_name ilike ? " +
                 "order by person_name asc;";
 
@@ -109,7 +110,12 @@ public class JdbcPersonDao implements PersonDao {
 
         person.setName(rowSet.getString("person_name"));
         person.setBiography(rowSet.getString("biography"));
-//        person.setBirthday(rowSet.getDate("birthday").toLocalDate());
+        if (rowSet.getDate("birthday") != null) {
+            person.setBirthday(rowSet.getDate("birthday").toLocalDate());
+        }
+        if (rowSet.getDate("deathday") != null){
+            person.setDeathDay(rowSet.getDate("deathday").toLocalDate());
+        }
         person.setProfilePath(rowSet.getString("profile_path"));
         person.setHomePage(rowSet.getString("home_page"));
 

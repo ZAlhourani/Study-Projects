@@ -81,17 +81,22 @@ public class JdbcMovieDao implements MovieDao {
 
         List<Movie> directorMovie = new ArrayList<>();
 
-        LocalDate startDate = LocalDate.of(startYear, 1,1);
-        LocalDate endDate = LocalDate.of(endYear, 12, 31);
 
         String sql = "select * from movie " +
                 "join person on person_id = director_id " +
-                "where person_name ilike ? and date_part('year', release_date) " +
+                "where person_name ilike ? and date_part('year', release_date) between ? and ? " +
                 "order by release_date asc;";
 
         if (useWildCard) {
             directorName = "%" + directorName + "%";
         }
+
+        // or we can do the date like this
+        //        LocalDate startDate = LocalDate.of(startYear, 1,1);
+        //        LocalDate endDate = LocalDate.of(endYear, 12, 31);
+        //        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, directorName, startDate, endDate);
+
+
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, directorName, startYear, endYear);
 

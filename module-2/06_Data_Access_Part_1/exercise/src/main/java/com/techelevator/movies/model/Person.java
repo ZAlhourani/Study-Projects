@@ -54,7 +54,7 @@ public class Person {
     }
 
     public void setDeathDay(LocalDate deathDay) {
-        this.deathDate = deathDay;
+        this.deathDate = deathDate;
     }
 
     public String getBiography() {
