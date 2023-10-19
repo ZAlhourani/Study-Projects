@@ -56,7 +56,7 @@ public class JdbcPersonDao implements PersonDao {
 
         Person person;
 
-        List<Person> personList = new ArrayList<>();
+        List<Person> personName = new ArrayList<>();
 
         String sql = "select * from person where person_name ilike ?;";
 
@@ -65,15 +65,39 @@ public class JdbcPersonDao implements PersonDao {
         }
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, name);
         while (results.next()) {
-            person = mapRowToPerson(results);
-            personList.add(person);
+
+           person = mapRowToPerson(results);
+            personName.add(person);
+
         }
-        return personList;
+        return personName;
     }
 
     @Override
     public List<Person> getPersonsByCollectionName(String collectionName, boolean useWildCard) {
-        return null;
+
+        Person person;
+
+        List<Person> personCollection = new ArrayList<>();
+
+        String sql = "select distinct person_id, person_name from person " +
+                "join movie on movie.director_id = person.person_id " +
+                "join collection on movie.collection_id = collection.collection_id " +
+                "where collection_name ilike ? " +
+                "order by person_name asc;";
+
+        if (useWildCard) {
+            collectionName = "%" + collectionName + "%";
+        }
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, collectionName);
+        while (results.next()) {
+
+            person = mapRowToPerson(results);
+
+            personCollection.add(person);
+        }
+        return personCollection;
     }
 
     private Person mapRowToPerson(SqlRowSet rowSet) {
@@ -84,9 +108,8 @@ public class JdbcPersonDao implements PersonDao {
         person.setId(personId);
 
         person.setName(rowSet.getString("person_name"));
-        person.setBirthday(rowSet.getDate("birthday").toLocalDate());
-        person.setDeathDay(rowSet.getDate("deathday").toLocalDate());
         person.setBiography(rowSet.getString("biography"));
+//        person.setBirthday(rowSet.getDate("birthday").toLocalDate());
         person.setProfilePath(rowSet.getString("profile_path"));
         person.setHomePage(rowSet.getString("home_page"));
 
