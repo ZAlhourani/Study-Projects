@@ -7,7 +7,7 @@ public class Person {
     private int id;
     private String name;
     private LocalDate birthday;
-    private LocalDate deathDay;
+    private LocalDate deathDate;
     private String biography;
     private String profilePath;
     private String homePage;
@@ -19,7 +19,7 @@ public class Person {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
-        this.deathDay = deathDay;
+        this.deathDate = deathDate;
         this.biography = biography;
         this.profilePath = profilePath;
         this.homePage = homePage;
@@ -50,11 +50,11 @@ public class Person {
     }
 
     public LocalDate getDeathDay() {
-        return deathDay;
+        return deathDate;
     }
 
     public void setDeathDay(LocalDate deathDay) {
-        this.deathDay = deathDay;
+        this.deathDate = deathDay;
     }
 
     public String getBiography() {
@@ -87,7 +87,7 @@ public class Person {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", birthday=" + birthday +
-                ", deathDate=" + deathDay +
+                ", deathDate=" + deathDate +
                 ", biography='" + biography + '\'' +
                 ", profilePath='" + profilePath + '\'' +
                 ", homePage='" + homePage + '\'' +
