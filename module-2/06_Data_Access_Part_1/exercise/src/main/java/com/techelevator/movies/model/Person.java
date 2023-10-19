@@ -49,12 +49,12 @@ public class Person {
         this.birthday = birthday;
     }
 
-    public LocalDate getDeathDate() {
+    public LocalDate getDeathDay() {
         return deathDate;
     }
 
-    public void setDeathDate(LocalDate deathDate) {
-        this.deathDate = deathDate;
+    public void setDeathDay(LocalDate deathDay) {
+        this.deathDate = deathDay;
     }
 
     public String getBiography() {
