@@ -132,7 +132,7 @@ public class JdbcPersonDaoTest extends BaseDaoTest {
         assertEquals(message, expected.getId(), actual.getId());
         assertEquals(message, expected.getName(), actual.getName());
         assertEquals(message, expected.getBirthday(), actual.getBirthday());
-        assertEquals(message, expected.getDeathDate(), actual.getDeathDate());
+        assertEquals(message, expected.getDeathDay(), actual.getDeathDay());
         assertEquals(message, expected.getBiography(), actual.getBiography());
         assertEquals(message, expected.getProfilePath(), actual.getProfilePath());
         assertEquals(message, expected.getHomePage(), actual.getHomePage());
