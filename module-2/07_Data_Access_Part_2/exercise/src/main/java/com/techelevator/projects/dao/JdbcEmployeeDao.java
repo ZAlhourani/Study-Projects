@@ -202,7 +202,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
 	public int deleteEmployeesByDepartmentId(int departmentId) {
 
 		String projectEmployeeSql = "delete from project_employee " +
-				"where employee_id = (select employee_id from employee where department_id = ?);";
+				"where employee_id in (select employee_id from employee where department_id = ?);";
 
 		String employeeSql = "delete from employee where department_id = ?;";
 
