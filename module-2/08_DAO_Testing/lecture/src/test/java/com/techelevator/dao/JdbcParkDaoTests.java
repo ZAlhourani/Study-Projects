@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class JdbcParkDaoTests extends BaseDaoTests {
 
@@ -25,47 +26,110 @@ public class JdbcParkDaoTests extends BaseDaoTests {
 
     @Test
     public void getParkById_with_valid_id_returns_correct_park() {
-        Assert.fail();
+
+        // arrange it's already done for us above "sut = new JdbcParkDao(dataSource);"
+
+        // act
+        Park park1 = sut.getParkById(1);
+
+        // assert
+        assertParksMatch(PARK_1, park1);
+
+        Park park2 = sut.getParkById(2);
+        assertParksMatch(PARK_2, park2);
     }
 
     @Test
     public void getParkById_with_invalid_id_returns_null_park() {
-        Assert.fail();
+        Park park = sut.getParkById(99);
+
+        Assert.assertNull(park);
     }
 
     @Test
     public void getParksByState_with_valid_state_returns_correct_parks() {
-        Assert.fail();
+        List<Park> parksInAA = sut.getParksByState("AA");
+        Assert.assertEquals(2,parksInAA.size());
+        assertParksMatch(PARK_1, parksInAA.get(0));
+        assertParksMatch(PARK_3, parksInAA.get(1));
+
+        List<Park> parksInBB = sut.getParksByState("BB");
+        Assert.assertEquals(1,parksInBB.size());
+        assertParksMatch(PARK_2, parksInBB.get(0));
     }
 
     @Test
     public void getParksByState_with_invalid_state_returns_empty_list() {
-        Assert.fail();
+
+        List<Park> parksInXX = sut.getParksByState("XX");
+        Assert.assertEquals(0, parksInXX.size());
     }
 
     @Test
     public void createPark_creates_park() {
-        Assert.fail();
+
+        Park testPark = new Park(0,"Disney", LocalDate.of(1930,1,5), 10.5, false);
+
+        Park createdPark = sut.createPark(testPark);
+        Assert.assertNotNull(createdPark);
+
+        int newParkId = createdPark.getParkId();
+        Assert.assertTrue(newParkId > 0);
+
+        Park retrievedPark = sut.getParkById(newParkId);
+        assertParksMatch(createdPark, retrievedPark);
     }
 
     @Test
     public void updatePark_updates_park() {
-        Assert.fail();
+
+        Park park2 = sut.getParkById(2);
+        park2.setParkName(park2.getParkName() + "blah");   // we are getting the same data but we add something to it to make it different, it's better than hard coding the data
+        park2.setHasCamping(!park2.getHasCamping());
+        park2.setArea(park2.getArea() + 1.5);
+        park2.setDateEstablished(park2.getDateEstablished().plusYears(11));
+
+        Park updatedPark = sut.updatePark(park2);
+        Assert.assertNotNull(updatedPark);
+
+        assertParksMatch(park2, updatedPark);
+
+        Park retrievedPark = sut.getParkById(park2.getParkId());
+
+        assertParksMatch(updatedPark, retrievedPark);
+
+
     }
 
     @Test
     public void deleteParkById_deletes_park() {
-        Assert.fail();
+        int rowsAffected =  sut.deleteParkById(1);
+
+        Assert.assertEquals(1, rowsAffected);
+
+        Park park1 = sut.getParkById(1);
+        Assert.assertNull(park1);
     }
 
     @Test
     public void linkParkState_adds_park_to_list_of_parks_in_state() {
-        Assert.fail();
+
+        sut.linkParkState(1, "BB");
+
+        List<Park> parksInBB =  sut.getParksByState("BB");
+        Assert.assertEquals(2, parksInBB.size());
+        assertParksMatch(PARK_1, parksInBB.get(0));
+        assertParksMatch(PARK_2, parksInBB.get(1));
+
     }
 
     @Test
     public void unlinkParkState_removes_park_from_list_of_parks_in_state() {
-        Assert.fail();
+        sut.unlinkParkState(2, "BB");
+
+        List<Park> parksInBB =  sut.getParksByState("BB");
+        Assert.assertEquals(0, parksInBB.size());
+
     }
 
     private void assertParksMatch(Park expected, Park actual) {
