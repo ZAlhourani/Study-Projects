@@ -99,7 +99,7 @@ public class JdbcTimesheetDaoTests extends BaseDaoTests {
 
         Timesheet timesheetToUpdate = dao.getTimesheetById(1);
 
-        timesheetToUpdate.setProjectId(timesheetToUpdate.getTimesheetId() + 1);
+        timesheetToUpdate.setProjectId(timesheetToUpdate.getProjectId() + 1);
         timesheetToUpdate.setEmployeeId(timesheetToUpdate.getEmployeeId() + 1);
         timesheetToUpdate.setDateWorked(timesheetToUpdate.getDateWorked().plusYears(11));
         timesheetToUpdate.setHoursWorked(timesheetToUpdate.getHoursWorked() + 1.5);
