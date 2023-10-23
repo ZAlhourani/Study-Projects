@@ -31,42 +31,108 @@ public class JdbcTimesheetDaoTests extends BaseDaoTests {
 
     @Test
     public void getTimesheetById_with_valid_id_returns_correct_timesheet() {
-        Assert.fail();
+
+        Timesheet timesheet1 = dao.getTimesheetById(1);
+
+        assertTimesheetsMatch(TIMESHEET_1, timesheet1);
+
+        Timesheet timesheet2 = dao.getTimesheetById(2);
+        assertTimesheetsMatch(TIMESHEET_2, timesheet2);
+
     }
 
     @Test
     public void getTimesheetById_with_invalid_id_returns_null_timesheet() {
-        Assert.fail();
+
+        Timesheet timesheet1 = dao.getTimesheetById(99);
+
+        Assert.assertNull(timesheet1);
+
+
     }
 
     @Test
     public void getTimesheetsByEmployeeId_with_valid_employee_id_returns_list_of_timesheets_for_employee() {
-        Assert.fail();
+
+        List<Timesheet> timesheetsList1 = dao.getTimesheetsByEmployeeId(1);
+
+        Assert.assertEquals(2, timesheetsList1.size());
+        assertTimesheetsMatch(TIMESHEET_1, timesheetsList1.get(0));
+        assertTimesheetsMatch(TIMESHEET_2, timesheetsList1.get(1));
+
+        timesheetsList1 = dao.getTimesheetsByEmployeeId(2);
+        Assert.assertEquals(2, timesheetsList1.size());
+        assertTimesheetsMatch(TIMESHEET_3, timesheetsList1.get(0));
+        assertTimesheetsMatch(TIMESHEET_4, timesheetsList1.get(1));
+
     }
 
     @Test
     public void getTimesheetsByProjectId_with_valid_id_returns_list_of_all_timesheets_for_project() {
-        Assert.fail();
+        List<Timesheet> timesheets = dao.getTimesheetsByProjectId(1);
+
+        Assert.assertEquals(3,timesheets.size());
+        assertTimesheetsMatch(TIMESHEET_1,timesheets.get(0));
+        assertTimesheetsMatch(TIMESHEET_2,timesheets.get(1));
+        assertTimesheetsMatch(TIMESHEET_3, timesheets.get(2));
+
+        timesheets = dao.getTimesheetsByProjectId(2);
+        assertTimesheetsMatch(TIMESHEET_4, timesheets.get(0));
     }
+
 
     @Test
     public void createTimesheet_creates_timesheet() {
-        Assert.fail();
+        Timesheet createdTimesheet = new Timesheet(1,1,1,LocalDate.of(2021,01,01),1.0,true,"Timesheet 1");
+        Assert.assertNotNull(createdTimesheet);
+
+        int newId = createdTimesheet.getTimesheetId();
+        Assert.assertTrue(newId > 0);
+
+        Timesheet retrievedCity = dao.getTimesheetById(newId);
+        assertTimesheetsMatch(createdTimesheet, retrievedCity);
+
     }
 
     @Test
     public void updateTimesheet_updates_timesheet() {
-        Assert.fail();
+
+        Timesheet timesheetToUpdate = dao.getTimesheetById(1);
+
+        timesheetToUpdate.setProjectId(timesheetToUpdate.getProjectId() + 1);
+        timesheetToUpdate.setEmployeeId(timesheetToUpdate.getEmployeeId() + 1);
+        timesheetToUpdate.setDateWorked(timesheetToUpdate.getDateWorked().plusYears(11));
+        timesheetToUpdate.setHoursWorked(timesheetToUpdate.getHoursWorked() + 1.5);
+        timesheetToUpdate.setBillable(!timesheetToUpdate.isBillable());
+        timesheetToUpdate.setDescription(timesheetToUpdate.getDescription() + "T");
+
+        Timesheet updatedTimesheet = dao.updateTimesheet(timesheetToUpdate);
+        Assert.assertNotNull(updatedTimesheet);
+
+        assertTimesheetsMatch(timesheetToUpdate, updatedTimesheet);
+        Timesheet retrievedTimesheet = dao.getTimesheetById(1);
+        assertTimesheetsMatch(updatedTimesheet,retrievedTimesheet);
     }
 
     @Test
     public void deleteTimesheetById_deletes_timesheet() {
-        Assert.fail();
+        int rowAffected = dao.deleteTimesheetById(1);
+        Assert.assertEquals(1, rowAffected);
+
+        Timesheet timesheet = dao.getTimesheetById(1);
+        Assert.assertNull(timesheet);
+
     }
 
     @Test
     public void getBillableHours_returns_correct_total() {
-        Assert.fail();
+
+        double billableHours = dao.getBillableHours(1, 1);
+        Assert.assertEquals(2.5, billableHours,0.00);
+
+        billableHours = dao.getBillableHours(2,2);
+        Assert.assertEquals(0.0,billableHours, 0.00);
+
     }
 
     private void assertTimesheetsMatch(Timesheet expected, Timesheet actual) {

@@ -1,43 +1,56 @@
 Bug 1
 -----
 Test that demonstrates problem:
+getTimesheetsByEmployeeId_with_valid_employee_id_returns_list_of_timesheets_for_employee()
 
-Expected output:
+Expected output: 2
 
-Actual output:
+Actual output: 1
 
 How did you fix this bug?
+Answer: I've changed the (if statement) to while loop and that fixed the bug.
 
 
 Bug 2
 -----
 Test that demonstrates problem:
+getTimesheetsByProjectId_with_valid_id_returns_list_of_all_timesheets_for_project
 
-Expected output:
+Expected output: 3
 
-Actual output:
+Actual output: 2
 
 How did you fix this bug?
+Answer: I've changed the where statement from employee_id to project_id.
 
 
 Bug 3
 -----
 Test that demonstrates problem:
+updateTimesheet_updates_timesheet
 
-Expected output:
+Expected output: false
 
-Actual output:
+Actual output: true
 
 How did you fix this bug?
+Answer: I've added (billable) to the sql query,
+also added (timesheet.isbillabel()) to the (int rowsAffected) statement
+and that fixed the bug.
 
 
 Bug 4
 -----
 Test that demonstrates problem:
+getBillableHours_returns_correct_total
 
 Expected output:
-
+hours_worked 0.00
 Actual output:
+hours_worked 2.0
 
 How did you fix this bug?
+The hours_worked for employee_id 2 and project_id 2 should be 0.0 because it's not billable
+so I've added (billable = true) to the sql query to check for billable hours.
+
 

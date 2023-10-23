@@ -203,7 +203,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
 
 		String projectEmployeeSql = "delete from project_employee " +
 				"where employee_id in (select employee_id from employee where department_id = ?);";
-
+// we use in if we compare one to many employee, equal sign if we compare one to one employee
 		String employeeSql = "delete from employee where department_id = ?;";
 
 		try {
