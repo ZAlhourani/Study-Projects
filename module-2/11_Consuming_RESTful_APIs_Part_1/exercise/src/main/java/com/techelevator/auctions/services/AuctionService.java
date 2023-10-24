@@ -11,23 +11,39 @@ public class AuctionService {
 
 
     public Auction[] getAllAuctions() {
-        // call api here
-        return null;
+
+        String url = API_BASE_URL;
+
+        Auction[] auctionList = restTemplate.getForObject(url, Auction[].class);
+
+        return auctionList;
     }
 
     public Auction getAuction(int id) {
-        // call api here
-        return null;
+
+        String url = API_BASE_URL + "/" + id;
+
+        Auction auctionId = restTemplate.getForObject(url, Auction.class);
+
+        return auctionId;
     }
 
     public Auction[] getAuctionsMatchingTitle(String title) {
-        // call api here
-        return null;
+
+        String url = API_BASE_URL + "?title_like=" + title;
+
+        Auction[] auctionMatchingTitle = restTemplate.getForObject(url, Auction[].class);
+
+        return auctionMatchingTitle;
     }
 
     public Auction[] getAuctionsAtOrBelowPrice(double price) {
-        // call api here
-        return null;
+
+        String url = API_BASE_URL + "?currentBid_lte=" + price;
+
+        Auction[] auctionByPrice = restTemplate.getForObject(url, Auction[].class);
+
+        return auctionByPrice;
     }
 
 }
