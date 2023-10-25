@@ -3,6 +3,7 @@ package com.techelevator.hotels.services;
 import com.techelevator.hotels.model.Hotel;
 import com.techelevator.hotels.model.Reservation;
 import com.techelevator.util.BasicLogger;
+import org.springframework.http.*;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
@@ -17,7 +18,24 @@ public class HotelService {
      * Create a new reservation in the hotel reservation system
      */
     public Reservation addReservation(Reservation newReservation) {
-        // TODO: Implement method
+
+        HttpHeaders headers = new HttpHeaders();
+
+//      headers.add("Content-Type", "application/json");  we can use this option or the one below
+
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Reservation> entity = new HttpEntity<>(newReservation, headers);
+
+        String url = API_BASE_URL + "/reservations";
+
+        try {
+            return restTemplate.postForObject(url, entity, Reservation.class);
+        }catch (RestClientResponseException e) {
+            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
+        } catch (ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
         return null;
     }
 
@@ -26,15 +44,47 @@ public class HotelService {
      * reservation
      */
     public boolean updateReservation(Reservation updatedReservation) {
-        // TODO: Implement method
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Reservation> entity = new HttpEntity<>(updatedReservation, headers);
+
+        String url = API_BASE_URL + "/reservations/" + updatedReservation.getId();
+
+        try {
+            restTemplate.put(url, entity);      //put is a void method
+
+//            ResponseEntity<Reservation> response = restTemplate.exchange(url, HttpMethod.PUT, entity, Reservation.class);   // this one will return the object
+//            Reservation returnedReservation = response.getBody();
+            return true;
+        }catch (RestClientResponseException e) {
+            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
+        } catch (ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
         return false;
     }
+
 
     /**
      * Delete an existing reservation
      */
     public boolean deleteReservation(int id) {
-        // TODO: Implement method
+
+        String url = API_BASE_URL + "/reservations/" + id;
+
+
+        try {
+            restTemplate.delete(url);
+            return true;
+
+        }catch (RestClientResponseException e) {
+            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
+        } catch (ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
         return false;
     }
 
