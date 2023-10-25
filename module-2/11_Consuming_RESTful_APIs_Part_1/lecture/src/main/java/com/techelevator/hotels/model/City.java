@@ -21,6 +21,10 @@ public class City {
         return fullName;
     }
 
+    public int getGeonameId() {
+        return geonameId;
+    }
+
     @Override
     public String toString(){
         return fullName;

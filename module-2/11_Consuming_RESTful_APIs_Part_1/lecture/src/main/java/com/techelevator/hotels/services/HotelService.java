@@ -1,5 +1,6 @@
 package com.techelevator.hotels.services;
 
+import com.techelevator.hotels.App;
 import com.techelevator.hotels.model.City;
 import com.techelevator.hotels.model.Hotel;
 import com.techelevator.hotels.model.Review;
@@ -11,27 +12,48 @@ public class HotelService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public Hotel[] listHotels() {
-        return null;
+
+        String url = API_BASE_URL + "/hotels";
+
+        Hotel[] results = restTemplate.getForObject(url, Hotel[].class);
+
+        return results;
     }
 
     public Review[] listReviews() {
-        return null;
+
+        String url = API_BASE_URL + "/reviews";
+
+        return restTemplate.getForObject(url, Review[].class);
     }
 
     public Hotel getHotelById(int id) {
-        return null;
+
+        String url = API_BASE_URL + "/hotels/" + id;
+
+        return restTemplate.getForObject(url, Hotel.class);
     }
 
     public Review[] getReviewsByHotelId(int hotelId) {
-        return null;
+
+//        String url = API_BASE_URL + "/reviews?hotelId=" + hotelId;        // one option
+        String url = API_BASE_URL + "/hotels/" + hotelId + "/reviews";      // another option
+
+        return restTemplate.getForObject(url, Review[].class);
     }
 
     public Hotel[] getHotelsByStarRating(int stars) {
-        return null;
+
+        String url = API_BASE_URL + "/hotels?stars=" + stars;
+
+        return restTemplate.getForObject(url, Hotel[].class);
     }
 
     public City getWithCustomQuery(){
-        return null;
+
+        String url = "https://api.teleport.org/api/cities/geonameid:5206379";
+
+        return restTemplate.getForObject(url, City.class);
     }
 
 }

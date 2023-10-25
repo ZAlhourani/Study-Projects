@@ -4,9 +4,13 @@ public class Hotel {
 
     private int id;
     private String name;
+
+    private Address address;
     private int stars;
     private int roomsAvailable;
     private String coverImage;
+
+    private int costPetNight;
 
     public int getId() {
         return id;
@@ -14,6 +18,10 @@ public class Hotel {
 
     public String getName() {
         return name;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 
     public int getStars() {
@@ -26,6 +34,14 @@ public class Hotel {
 
     public String getCoverImage() {
         return coverImage;
+    }
+
+    public int getCostPetNight() {
+        return costPetNight;
+    }
+
+    public void setCostPetNight(int costPetNight) {
+        this.costPetNight = costPetNight;
     }
 
     @Override
