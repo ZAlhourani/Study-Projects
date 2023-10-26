@@ -111,6 +111,27 @@
       "roomsAvailable": 75,
       "costPerNight": 185,
       "coverImage": "greektown-detroit.webp"
+    },
+    {
+      "name": "The Tech Elevator",
+      "address": {
+        "id": "4b1a53f0-3ab9-446a-a77d-31c46b594a3d",
+        "address": "901 Pennsylvania Ave",
+        "address2": "",
+        "city": "Pittsburgh",
+        "state": "Pennsylvania",
+        "zip": "15227"
+      },
+      "stars": 5,
+      "roomsAvailable": 1,
+      "costPerNight": 131,
+      "coverImage": "westin-pittsburgh.webp",
+      "id": 8
+    },
+    {
+      "name": "New Hotel",
+      "roomAvailable": 5,
+      "id": 9
     }
   ],
   "reservations": [
@@ -137,6 +158,14 @@
       "checkinDate": "2024-04-15",
       "checkoutDate": "2024-04-21",
       "guests": 4
+    },
+    {
+      "id": 707,
+      "hotelId": 1,
+      "fullName": "Walt",
+      "checkinDate": "10/26/2023",
+      "checkoutDate": "10/31/2023",
+      "guests": 3
     }
   ]
 }
