@@ -5,10 +5,12 @@ import com.techelevator.reservations.dao.MemoryHotelDao;
 import com.techelevator.reservations.dao.MemoryReservationDao;
 import com.techelevator.reservations.dao.ReservationDao;
 import com.techelevator.reservations.model.Hotel;
+import com.techelevator.reservations.model.Reservation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class HotelController {
 
     private HotelDao hotelDao;
@@ -24,11 +26,14 @@ public class HotelController {
      *
      * @return a list of all hotels in the system
      */
-    @RequestMapping(path = "/hotels", method = RequestMethod.GET)
-    public List<Hotel> list() {
-        return hotelDao.getHotels();
-    }
 
+    @RequestMapping(path = "/hotels", method = RequestMethod.GET)
+    public List<Hotel> list(@RequestParam(defaultValue = "") String state, @RequestParam(required = false) String city) {
+
+        return hotelDao.getHotelsByStateAndCity(state, city);
+
+//        return hotelDao.getHotels();
+    }
     /**
      * Return hotel information
      *
@@ -39,5 +44,31 @@ public class HotelController {
     public Hotel get(@PathVariable int id) {
         return hotelDao.getHotelById(id);
     }
+
+    @RequestMapping(path = "/reservations", method = RequestMethod.GET)
+    public List<Reservation> getAllReservations() {
+        return reservationDao.getReservations();
+    }
+
+    @GetMapping("reservations/{reservationId}")
+    public Reservation getReservationById(@PathVariable int reservationId) {
+        return reservationDao.getReservationById(reservationId);
+
+    }
+
+    @GetMapping("/hotels/{id}/reservations")
+    public List<Reservation> getReservationsByHotel(@PathVariable("id") int hotelId) {
+        return reservationDao.getReservationsByHotel(hotelId);
+    }
+
+    @RequestMapping(path = "/reservations", method = RequestMethod.POST)
+
+    public Reservation createReservation(@RequestBody Reservation reservationToCreate) {
+
+        return reservationDao.createReservation(reservationToCreate);
+    }
+
+
+
 
 }
