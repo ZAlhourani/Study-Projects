@@ -2,12 +2,14 @@ package com.techelevator.reservations.controllers;
 
 import com.techelevator.reservations.dao.HotelDao;
 import com.techelevator.reservations.dao.ReservationDao;
+import com.techelevator.reservations.exception.DaoException;
 import com.techelevator.reservations.model.Hotel;
 import com.techelevator.reservations.model.Reservation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,7 +33,7 @@ public class HotelController {
      * @return a list of hotels that match the city & state
      */
     @RequestMapping(path = "/hotels", method = RequestMethod.GET)
-    public List<Hotel> list(@RequestParam(required=false) String state, @RequestParam(required = false) String city) {
+    public List<Hotel> list(@RequestParam(required = false) String state, @RequestParam(required = false) String city) {
         return hotelDao.getHotelsByStateAndCity(state, city);
     }
 
@@ -98,9 +100,26 @@ public class HotelController {
      *
      * @param reservation
      */
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED) // 201
     @RequestMapping(path = "/reservations", method = RequestMethod.POST)
-    public Reservation addReservation(@RequestBody Reservation reservation) {
+    public Reservation addReservation(@Valid @RequestBody Reservation reservation) {
         return reservationDao.createReservation(reservation);
+    }
+
+    @RequestMapping(path = "/reservations/{reservationId}", method = RequestMethod.PUT)
+    public Reservation updateReservation(@Valid @RequestBody Reservation reservation,@PathVariable int reservationId) {
+
+        reservation.setId(reservationId);
+
+        try {
+            return reservationDao.updateReservation(reservation);
+        }catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation was not found");
+        }
+    }
+    @ResponseStatus(HttpStatus.NO_CONTENT) // 204
+    @RequestMapping(path = "/reservations/{reservationId}", method = RequestMethod.DELETE)
+    public void deleteReservation (@PathVariable int reservationId) {
+        reservationDao.deleteReservationById(reservationId);
     }
 }
