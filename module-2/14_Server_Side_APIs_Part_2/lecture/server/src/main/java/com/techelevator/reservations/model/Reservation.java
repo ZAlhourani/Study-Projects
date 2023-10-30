@@ -2,19 +2,35 @@ package com.techelevator.reservations.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import javax.validation.constraints.*;
 
 import java.time.LocalDate;
 
 public class Reservation {
 
     private int id;
+    @Positive
     private int hotelId;
+    @NotBlank
     private String fullName;
+    @FutureOrPresent
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate checkinDate;
+    @Future
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate checkoutDate;
+
+    @Min(value = 1, message = "Must have at least 1 guest")
     private int guests;
+
+
+
+
+    // below is how we custom the validation
+    @AssertTrue(message = "Check-out must come after Check-in")
+    private boolean isCheckoutAfterCheckin() {
+        return checkoutDate.isAfter(checkinDate);
+    }
 
     public Reservation(int id, int hotelId, String fullName, LocalDate checkinDate, LocalDate checkoutDate, int guests) {
         this.id = id;
