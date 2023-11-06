@@ -19,7 +19,7 @@ import java.util.List;
 public class HotelController {
 
     private HotelDao hotelDao;
-    private ReservationDao reservationDao;
+    private MemoryReservationDao reservationDao;
     private UserDao userDao;
 
 //    public HotelController() {
@@ -27,7 +27,7 @@ public class HotelController {
 //        this.reservationDao = new MemoryReservationDao(hotelDao);
 //    }
 
-    public HotelController(HotelDao hotelDao, ReservationDao reservationDao, UserDao userDao) {
+    public HotelController(HotelDao hotelDao, MemoryReservationDao reservationDao, UserDao userDao) {
         this.hotelDao = hotelDao;
         this.reservationDao = reservationDao;
         this.userDao = userDao;

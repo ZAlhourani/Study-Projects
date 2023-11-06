@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MemoryReservationDao implements ReservationDao {
+public class MemoryReservationDao   {
 
     private static List<Reservation> reservations = new ArrayList<>();
     private HotelDao hotelDao;
@@ -26,7 +26,6 @@ public class MemoryReservationDao implements ReservationDao {
         return reservations;
     }
 
-    @Override
     public List<Reservation> getReservationsByHotel(int hotelId) {
         List<Hotel> hotels = hotelDao.getHotels();
         boolean hotelExists = false;
@@ -51,7 +50,6 @@ public class MemoryReservationDao implements ReservationDao {
         return hotelReservations;
     }
 
-    @Override
     public Reservation getReservationById(int reservationId) {
         for (Reservation res : reservations) {
             if (res.getId() == reservationId) {
@@ -61,14 +59,12 @@ public class MemoryReservationDao implements ReservationDao {
         return null;
     }
 
-    @Override
     public Reservation createReservation(Reservation reservation) {
         reservation.setId(getMaxIdPlusOne());
         this.reservations.add(reservation);
         return reservation;
     }
 
-    @Override
     public Reservation updateReservation(Reservation reservation) {
         Reservation result = reservation;
         boolean finished = false;
@@ -87,7 +83,6 @@ public class MemoryReservationDao implements ReservationDao {
         return result;
     }
 
-    @Override
     public int deleteReservationById(int id) {
         Reservation target = null;
         for (Reservation reservation : reservations) {
