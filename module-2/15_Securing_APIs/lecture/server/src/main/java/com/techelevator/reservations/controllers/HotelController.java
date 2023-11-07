@@ -1,28 +1,36 @@
 package com.techelevator.reservations.controllers;
 
-import com.techelevator.reservations.dao.HotelDao;
-import com.techelevator.reservations.dao.MemoryHotelDao;
-import com.techelevator.reservations.dao.MemoryReservationDao;
-import com.techelevator.reservations.dao.ReservationDao;
+import com.techelevator.reservations.dao.*;
 import com.techelevator.reservations.exception.DaoException;
 import com.techelevator.reservations.model.Hotel;
 import com.techelevator.reservations.model.Reservation;
+import com.techelevator.reservations.model.User;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
+@PreAuthorize("isAuthenticated()")
 public class HotelController {
 
     private HotelDao hotelDao;
     private ReservationDao reservationDao;
+    private UserDao userDao;
 
-    public HotelController() {
-        this.hotelDao = new MemoryHotelDao();
-        this.reservationDao = new MemoryReservationDao(hotelDao);
+//    public HotelController() {
+//        this.hotelDao = new MemoryHotelDao();
+//        this.reservationDao = new MemoryReservationDao(hotelDao);
+//    }
+
+    public HotelController (HotelDao hotelDao, ReservationDao reservationDao, UserDao userDao) {
+        this.hotelDao = hotelDao;
+        this.reservationDao = reservationDao;
+        this.userDao = userDao;
     }
 
  /**
@@ -34,6 +42,8 @@ public class HotelController {
      * @param city  the city to filter by
      * @return a list of hotels that match the city & state
      */
+
+    @PreAuthorize("permitAll")
     @RequestMapping(path = "/hotels", method = RequestMethod.GET)
     public List<Hotel> list(@RequestParam(required=false) String state, @RequestParam(required = false) String city) {
         return hotelDao.getHotelsByStateAndCity(state, city);
@@ -103,9 +113,20 @@ public class HotelController {
      *
      * @param reservation
      */
+
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/reservations", method = RequestMethod.POST)
-    public Reservation addReservation(@Valid @RequestBody Reservation reservation) {
+    public Reservation addReservation(@Valid @RequestBody Reservation reservation, Principal principal) {
+
+        String username = principal.getName();
+
+        User user = userDao.getUserByUsername(username);
+
+        long userId = user.getId();
+
+        reservation.setUserId(userId);
+
         return reservationDao.createReservation(reservation);
     }
 
@@ -117,10 +138,24 @@ public class HotelController {
      * @return the updated Reservation
      */
     @RequestMapping(path = "/reservations/{id}", method = RequestMethod.PUT)
-    public Reservation update(@Valid @RequestBody Reservation reservation, @PathVariable int id) {
+    public Reservation update(@Valid @RequestBody Reservation reservation, @PathVariable int id, Principal principal) {
+
+        String username = principal.getName();
+
+        User user = userDao.getUserByUsername(username);
+
+        long loggedInUserId = user.getId();
+
         // The id on the path takes precedence over the id in the request body, if any
         reservation.setId(id);
         try {
+
+            Reservation retrievedReservation = reservationDao.getReservationById(id);
+            long reservationUserId = retrievedReservation.getUserId();
+
+            if (reservationUserId != loggedInUserId) {
+                throw new  ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to update this reservation.");
+            }
             Reservation updatedReservation = reservationDao.updateReservation(reservation);
             return updatedReservation;
         } catch (DaoException e) {
@@ -133,6 +168,8 @@ public class HotelController {
      *
      * @param id
      */
+
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/reservations/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id) {

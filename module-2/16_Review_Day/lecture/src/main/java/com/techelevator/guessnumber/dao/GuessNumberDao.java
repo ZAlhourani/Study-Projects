@@ -5,11 +5,8 @@ import com.techelevator.guessnumber.model.Game;
 import java.util.List;
 
 public interface GuessNumberDao {
-    Game startNewGame(String playerName);
 
-    List<Game> getAll();
+    List<Game> getAllGames();
 
-    Game getGameById(int gameId);
-
-    Game makeGuess(int gameId, int guess);
+    Game startNewGame(Game gameToCreate);
 }

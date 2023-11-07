@@ -19,6 +19,8 @@ public class Reservation {
     @Max( value = 5, message = "The maximum number of guests is 5")
     private int guests;
 
+    private long userId;
+
     public Reservation(int id, int hotelId, String fullName, String checkinDate, String checkoutDate, int guests) {
         this.id = id;
         this.hotelId = hotelId;
@@ -74,6 +76,14 @@ public class Reservation {
 
     public void setGuests(int guests) {
         this.guests = guests;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     @Override
