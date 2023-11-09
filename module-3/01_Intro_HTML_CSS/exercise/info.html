@@ -4,8 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Form Page</title>
+
+    <link rel="stylesheet" href="infostyles.css">
+
 </head>
 <body>
-    
+
+    <form action="www.ronaldo.com" method="post">
+
+    <section id="name">
+        <label for="name">Name:</label>
+        <input name="name" id="name" type="text" required>
+    </section>
+
+    <section id="email">
+        <label for="email">Email:</label>
+        <input name="email" id="email" type="email" required>
+    </section>
+
+    <section id="date-of-birth">
+        <label for="date-of-birth">Date of Birth:</label>
+        <input name="date-of-birth" id="date-of-birth" type="date">
+    </section>
+
+    <section id="favorite-color">
+        <label for="favorite-color">Favorite Color:</label>
+        <input name="favorite-color" id="favorite-color" type="color">
+    </section>
+
+    <section id="lucky-number">
+        <label for="lucky-number">Favorite Number:</label>
+        <input name="lucky-number" id="lucky-number" type="number">
+    </section>
+
+    <section>
+        <label for="confirmation">Confirm data is correct:</label>
+        <input name="confirmation" id="confirmation" type="checkbox">
+    </section>
+
+    <section>
+        <input type="submit" value="Submit">
+      </section>
+
+    </form>
+
 </body>
 </html>
