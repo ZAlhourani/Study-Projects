@@ -17,6 +17,7 @@ ul {
 }
 
 aside{
+  display: inline;
   position: fixed;
   border: 1px solid rgba(0, 173, 238, 0.4);
   width: 200px;
