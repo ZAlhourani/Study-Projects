@@ -30,7 +30,6 @@ aside > img {
   margin: 0 auto;
   display: block;
 } 
-
 main{
   padding-left: 200px;
 }
@@ -64,14 +63,14 @@ main div img{
   display: inline-block;
   width: 100%;
   margin: 20px;
-  padding: 0 auto;
+  
 }
 
 main section div{
   width: 33%;
   display: inline-block;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 10px;
   
 }
 
