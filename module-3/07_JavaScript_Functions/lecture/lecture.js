@@ -28,6 +28,12 @@ function printToConsole(value) {
  * @param {number} secondParameter the second parameter to multiply
  */
 
+function multiplyTogether(firstParameter, secondParameter) {
+
+return firstParameter * secondParameter;
+
+}
+
 /**
  * This version makes sure that no parameters are ever missing. If
  * someone calls this function without parameters, we default the
@@ -39,6 +45,15 @@ function printToConsole(value) {
  * @param {number} [secondParameter=0] the second parameter to multiply
  */
 
+function multiplyNoUndefined(firstParameter = 0, secondParameter = 0){
+
+  if (typeof firstParameter !== 'number' || typeof secondParameter !== 'number') {
+    throw Error('first or second parameter is not a number');
+  }
+
+return firstParameter * secondParameter;
+
+}
 
 
 /**
@@ -51,6 +66,7 @@ function printToConsole(value) {
  * @param {number} firstParameter the first parameter
  * @param {number} secondParameter the second parameter
  */
+
 function returnBeforeEnd(firstParameter, secondParameter) {
   console.log("This will always fire.");
 
@@ -67,9 +83,49 @@ function returnBeforeEnd(firstParameter, secondParameter) {
 
 /* arguments object and rest parameter syntax */
 
+function addAllNumbers(a, b, c){
+  let sum = 0;
+
+  for (let i = 0; i < arguments.length; i++) {
+    sum += arguments[i];
+  }
+
+  return sum;
+}
+
+
+function addAllNumbers(a = 0, b = 0, ...c){
+  let sum = a + b;
+
+  for (let val of c) {
+    sum += val;
+  }
+
+  return sum;
+}
+
 /* Named Functions: Regular vs. Arrow */
 
+addAllNumbers = (a = 0, b = 0, ...c) => {
+  let sum = a + b;
+
+  for (let val of c) {
+    sum += val;
+  }
+
+  return sum;
+
+}
+
 /* Anonymous functions */
+
+const myFunc = function (a, b) {
+  return a + b;
+}
+const myOtherFunc = (a, b) => {
+  return a + b;
+}
+
 
 /* Array functions requiring a function as a parameter */
 
@@ -84,7 +140,21 @@ function returnBeforeEnd(firstParameter, secondParameter) {
  * multiples of 3
  */
 function allDivisibleByThree(numbersToFilter) {
+
+  const numsDivisibleBy3 = [];
+
+  for (let num of numbersToFilter) {
+    if (num % 3 === 0) {
+      numsDivisibleBy3.push(num);
+  
+    }
+  }
+
+  return numsDivisibleBy3;
 }
+
+
+function filterFunction(elements)
 
 /**
  * Return true if all numbers are divisible by 3
