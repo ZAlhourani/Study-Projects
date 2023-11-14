@@ -10,8 +10,15 @@
  */
 function variables() {
   // Declares a variable where the value cannot be changed
+  const x = 'Hello';
+
   // Declares a variable those value can be changed
+  let y = 'Goodbye';
+  y = 5
   // Declares a variable that will always be an array
+  const myArray = [];
+  myArray.push(5);
+  myArray = [5]; // cant do this
 }
 
 /**
@@ -23,6 +30,8 @@ function variables() {
 function printParameters(param1, param2) {
   console.log(`The value of param1 is ${param1}`);
   console.log(`The value of param2 is ${param2}`);
+
+  return param1 + param2;
 }
 
 /**
@@ -75,9 +84,40 @@ function objects() {
 
   // Log the object
 
+  console.log(person);
+
   // Log the first and last name
 
+  console.log(person.firstName + ' ' + lastName);
+  //or we can do this 
+  console.log(`${person.firstName} ${person.lastName}`)
+
   // Log each employee
+
+  // for-loop
+  for (let i = 0; i < person.employees.length; i++) {
+    console.log(person.employees[i]);
+  }
+
+  // for-each
+  for (let employee of person.employees) {
+    console.log(employee);
+  }
+
+  // while loop
+  let j = 0;
+  while (j < person.employees.length) {
+    console.log(person.employees[j]);
+
+    j++;
+  }
+
+  // do-while
+  let k = 0;
+  do {
+    console.log(person.employees[k]);
+    k++;
+  }while(k < person.employees.length);
 }
 
 /*
