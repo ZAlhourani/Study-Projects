@@ -41,3 +41,17 @@ a:hover {
 .my-account img {
   width: 40px;
 }
+
+header{
+  display: flex;
+}
+
+ul{
+  display: flex;
+}
+
+.spacer{
+  align-content:;
+}
+
+
