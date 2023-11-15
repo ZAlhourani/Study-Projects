@@ -9,6 +9,8 @@ body {
   padding: 20px;
   margin-bottom: 20px;
   border: solid 1px #555;
+
+  display: flex;
 }
 
 .bio img {
@@ -17,6 +19,15 @@ body {
   margin: 0 10px;
 }
 
-div.bio{
-  flex-direction:row-reverse;
+.bio:nth-child(2) > img {
+  order: 1;
 }
+
+/* or we can do this 
+.bio:nth-child(2) > img {
+  flex-direction: row-reverse;
+} */
+
+/* nth-child(number) is the same when you pick last child
+
+
