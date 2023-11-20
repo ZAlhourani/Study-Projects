@@ -9,7 +9,16 @@ public class Exercises {
 	 arrayCount9([1, 9, 9, 3, 9]) → 3
 	 */
 	public int arrayCount9(int[] nums) {
-		return 0;
+
+		int count = 0;
+
+		for (int i = 0; i < nums.length; i++) {
+
+			if(nums[i] == 9){
+				count++;
+			}
+		}
+		return count;
 	}
 
 	/*
@@ -19,6 +28,13 @@ public class Exercises {
 	 arrayFront9([1, 2, 3, 4, 5]) → false
 	 */
 	public boolean arrayFront9(int[] nums) {
+
+		for (int i = 0; i < nums.length && i < 4; i++) {
+
+			if (nums[i] == 9){
+				return true;
+		}
+		}
 		return false;
 	}
 
@@ -29,6 +45,13 @@ public class Exercises {
 	 array123([1, 1, 2, 1, 2, 3]) → true
 	 */
 	public boolean array123(int[] nums) {
+
+		for (int i = 0; i < nums.length -2; i++) {
+
+			if (nums[i] == 1 && nums[i+1] == 2 && nums[i+2] == 3) {
+				return true;
+		}
+		}
 		return false;
 	}
 
@@ -40,7 +63,14 @@ public class Exercises {
 	 noTriples([1, 1, 1, 2, 2, 2, 1]) → false
 	 */
 	public boolean noTriples(int[] nums) {
-		return false;
+
+		for (int i = 0; i < nums.length - 2; i++) {
+
+			if (nums[i] == nums[i+1] && nums[i] == nums[i+2]){
+				return false;
+		}
+		}
+		return true;
 	}
 
 	/*
@@ -51,7 +81,8 @@ public class Exercises {
 	 makeEnds([7, 4, 6, 2]) → [7, 2]
 	 */
 	public int[] makeEnds(int[] nums) {
-		return new int[] {};
+
+		return new int[] { nums[0], nums[nums.length - 1] };
 	}
 
 	/*
@@ -61,6 +92,13 @@ public class Exercises {
 	 has23([4, 5]) → false
 	 */
 	public boolean has23(int[] nums) {
+
+		for (int i = 0; i < nums.length; i++) {
+
+			if (nums[i] == 2 || nums[i] == 3){
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -71,7 +109,15 @@ public class Exercises {
 	 no23([3, 5]) → false
 	 */
 	public boolean no23(int[] nums) {
-		return false;
+
+		for (int i = 0; i < 2; i++) {
+
+			if (nums[i] == 2 || nums[i] == 3){
+
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/*
@@ -83,7 +129,12 @@ public class Exercises {
 	 makeLast([3]) → [0, 3]
 	 */
 	public int[] makeLast(int[] nums) {
-		return new int[] {};
+
+		int[] newArray = new int[nums.length * 2];
+
+		newArray[newArray.length - 1] = nums[nums.length - 1];
+
+		return newArray;
 	}
 
 	/*
@@ -93,6 +144,14 @@ public class Exercises {
 	 double23([2, 3]) → false
 	 */
 	public boolean double23(int[] nums) {
+
+		for (int i = 0; i < nums.length -1; i++) {
+
+			if (nums[i] == 2 && nums[i+1] == 2 || nums[i] == 3 && nums[i+1] == 3){
+
+				return true;
+			}
+		}
 		return false;
 	}
 

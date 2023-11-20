@@ -54,12 +54,48 @@ function displayReview(review) {
 
 // LECTURE STARTS HERE ---------------------------------------------------------------
 
+document.addEventListener('DOMContentLoaded', () => {
 // Set the product reviews page title.
 setPageTitle();
 // Set the product reviews page description.
 setPageDescription();
 // Display all of the product reviews on our page.
 displayReviews();
+
+const descElement = document.querySelector('.description');
+descElement.addEventListener('click', (event) => {
+  toggleDescriptionEdit(event.currentTarget);
+});
+
+document.getElementById('inputDesc').addEventListener('mouseleave', (event) => {
+    exitDescriptionEdit(event.currentTarget, false); // false because the function has a second parameter (save) and it's a boolean
+});
+
+document.getElementById('inputDesc').addEventListener('keyup', (event) => {
+
+  if (event.key === 'Enter') {
+      
+    exitDescriptionEdit(event.currentTarget, true);
+  }
+
+  if (event.key === 'Escape') {
+
+    exitDescriptionEdit(event.currentTarget, false);
+  }
+});
+
+document.getElementById('btnToggleForm').addEventListener('click', () => {
+  showHideForm();
+
+});
+
+document.querySelector('form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  saveReview();
+});
+
+
+});
 
 /**
  * Hide the description and show the text box.
@@ -95,16 +131,31 @@ function exitDescriptionEdit(textBox, save) {
  */
 function showHideForm() {
   // find form
-  // find button inside of form
+
+  const fromElement = document.querySelector('form')
+  
+  // find Add Review button
+
+  const toggleBtn = document.getElementById('btnToggleForm');
 
   // if form is hidden
+
+  if (fromElement.classList.contains('d-none')) {
     // unhide the form
+      fromElement.classList.remove('d-none');
     // change button text
+      toggleBtn.innerText = 'Hide Form';
     // set focus on the first field
-  // else
+      fromElement.querySelector('input').focus();
+
+  } else {
     // reset the form fields
+    resetFormValues();
     // hide the form
+    fromElement.classList.add('d-none');
     // change button text
+    toggleBtn.innerText = 'Add Review';
+  }
 }
 
 /**
@@ -112,9 +163,27 @@ function showHideForm() {
  */
 function resetFormValues() {
   // find all inputs and reset values
+  document.getElementById('name').value = '';
+  document.getElementById('title').value = '';
+  document.getElementById('rating').value = '1';
+  document.getElementById('review').value = '';
 }
 
 /**
  * Save the review that was added using the add review form.
  */
-function saveReview() {}
+function saveReview() {
+
+  const newReviewObj = {
+    reviewer: document.getElementById('name').value,
+    title: document.getElementById('title').value,
+    review: document.getElementById('review').value,
+    rating: Number(document.getElementById('rating').value)
+  };
+
+  reviews.push(newReviewObj);
+
+  displayReview(newReviewObj);
+
+  showHideForm();
+}
