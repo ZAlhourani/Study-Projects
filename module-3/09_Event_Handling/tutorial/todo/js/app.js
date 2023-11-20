@@ -38,6 +38,14 @@ function addTodos() {
   todoList.appendChild(ul);
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+
 init();
 addPageTitle();
 addTodos();
+
+const liElement = document.querySelectorAll('li');
+
+});
+
+

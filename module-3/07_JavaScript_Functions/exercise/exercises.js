@@ -66,8 +66,9 @@ return unfilteredArray.filter(array);
  * @returns {number} the resultant number
  */
 
-function makeNumber (first, second = ''){
-    return +(first + second);
+function makeNumber (first, second = '') {
+
+    return Number(first + second);
 }
 
 /**
@@ -189,3 +190,13 @@ function findLargest(array) {
  *
  * Read the tests to verify you have the correct behavior.
  */
+
+function getSumOfSubArrayValues(arrayOfArrays){
+
+    if (arrayOfArrays == null) {
+        return 0;
+    }
+    return arrayOfArrays.reduce((totalSum, currArray) => {
+        return totalSum + currArray.reduce((sum, currNum) => sum + currNum)
+    }, 0);
+}
