@@ -163,7 +163,14 @@ public class Exercises {
 	 fix23([1, 2, 1]) → [1, 2, 1]
 	 */
 	public int[] fix23(int[] nums) {
-		return new int[] {};
+
+		for (int i = 0; i < nums.length; i++) {
+
+			if (nums[i] == 2 && nums[i + 1] == 3) {
+				nums[i + 1] = 0;
+			}
+		}
+		return nums;
 	}
 
 	/*
@@ -173,8 +180,17 @@ public class Exercises {
 	 start1([1, 2], []) → 1
 	 */
 	public int start1(int[] a, int[] b) {
-		return 0;
+
+		if (a[0] == 1 && b[0] == 1) {
+			return 2;
+		} else if (a[0] == 1 || b[0] == 1) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
+
+
 
 	/*
 	 12. Start with 2 int arrays, a and b, each length 2. Consider the sum of the values in each array. Return the
