@@ -4,33 +4,71 @@
     <p>{{ description }}</p>
 
     <div class="well-display">
-      <div class="well">
+      <div class="well" v-bind:class="{ selected: ratingFilter === 0 }" v-on:click="ratingFilter = 0">
         <span class="amount">{{ averageRating }}</span>
         Average Rating
       </div>
-      <div class="well">
+      <div class="well" v-bind:class="{ selected: ratingFilter === 1 }" v-on:click="updateFilter(1)">
         <span class="amount">{{ numberOf1StarReviews }}</span>
         1 Star Review
       </div>
-      <div class="well">
+      <div class="well" v-bind:class="{ selected: ratingFilter === 2 }" v-on:click="updateFilter(2)">
         <span class="amount">{{ numberOf2StarReviews }}</span>
-        2 Star Reviews
+        {{ twoStarReviewText }}
       </div>
-      <div class="well">
+      <div class="well" v-bind:class="{ selected: ratingFilter === 3 }" v-on:click="updateFilter(3)">
         <span class="amount">{{ numberOf3StarReviews }}</span>
-        3 Star Reviews
+        {{  numberOf3StarReviews === 1 ? '3 Star Review' : '3 Star Reviews' }}
       </div>
-      <div class="well">
+      <div class="well" v-bind:class="{ selected: ratingFilter === 4 }" v-on:click="updateFilter(4)">
         <span class="amount">{{ numberOf4StarReviews }}</span>
-        4 Star Reviews
+        4 Star Review{{  numberOf4StarReviews === 1 ? '' : 's' }}
       </div>
-      <div class="well">
+      <div class="well" v-bind:class="{ selected: ratingFilter === 5 }" v-on:click="updateFilter(5)">
         <span class="amount">{{ numberOf5StarReviews }}</span>
-        5 Star Reviews
+        {{ starReviewText (5) }}
       </div>
     </div>
 
-    <section class="review" v-bind:class="{ favorited: review.isFavorite }" v-for="review in reviews" v-bind:key="review.id">
+    <a href="#" v-on:click.prevent= "isFormShowing = !isFormShowing">
+
+      {{ getShowHideFormText }}
+
+      <!--  or we can do this instead {{ isFormShowing ? 'Hide Form' : 'Show Form' }} -->
+
+    </a>
+
+    <form v-show="isFormShowing" v-on:submit.prevent="saveReview">
+      <div class="form-element">
+        <label for="reviewer">Name:</label>
+      <input type="text" id="reviewer" v-model="newReview.reviewer">
+      </div>
+
+      <div class="form-element">
+        <label for="title">Title:</label>
+        <input type="text" id="title" v-model="newReview.title">
+      </div>
+
+      <div class="form-element">
+        <label for="rating">Rating:</label>
+        <select id="rating" v-model.number="newReview.rating">
+          <option value="1">1 Star</option>
+          <option value="2">2 Star</option>
+          <option value="3">3 Star</option>
+          <option value="4">4 Star</option>
+          <option value="5">5 Star</option>
+        </select>
+      </div>
+
+      <div class="form-element">
+        <label for="review">Review:</label>
+      <textarea id="review" v-model="newReview.review"></textarea>
+    </div>
+    <input type="submit" value="Save">
+    <input type="button" value="Reset" v-on:click="resetForm">
+    </form>
+
+    <section class="review" v-bind:class="{ favorited: review.isFavorite }" v-for="review in filteredList" v-bind:key="review.id">
       <h4>{{ review.reviewer }}</h4>
       <div class="rating">
         <img v-bind:title="review.rating + ' star review'" class="ratingStar" v-for="n in review.rating" v-bind:key="n" src="./assets/star.png" alt="Rating Star">
@@ -57,6 +95,27 @@ export default {
   components: {},
 
   computed: {
+
+    filteredList() {
+      return this.reviews.filter(review => {
+        if(review.rating === this.ratingFilter || this.ratingFilter === 0) {
+          return true;
+        }
+
+        return false;
+      });
+
+    },
+
+    getShowHideFormText() {
+
+      if(this.isFormShowing) {
+        return 'Hide Form';
+      }
+
+      return 'Show Form'
+    },
+
     averageRating() {
       const sum = this.reviews.reduce((prev, curr) => prev + curr.rating, 0);
 
@@ -64,25 +123,36 @@ export default {
     },
 
     numberOf1StarReviews() {
-      return this.reviews.filter(review => review.rating === 1).length;
+      return this.numberOfStarReviews(1)
     },
 
     numberOf2StarReviews() {
-      return this.reviews.filter(review => review.rating === 2).length;
+      return this.numberOfStarReviews(2)
     },
 
     numberOf3StarReviews() {
-      return this.reviews.filter(review => review.rating === 3).length;
+      return this.numberOfStarReviews(3)
     },
 
     numberOf4StarReviews() {
-      return this.reviews.filter(review => review.rating === 4).length;
+      return this.numberOfStarReviews(4)
     },
 
     numberOf5StarReviews() {
-      return this.reviews.filter(review => review.rating === 5).length;
+      return this.numberOfStarReviews(5)
+    },
+    
+    twoStarReviewText() {
+
+    if(this.numberOf2StarReviews == 1){
+      
+      return '2 Star Review';
     }
+    return '2 Star Reviews';
   },
+  },
+
+  
 
   data() {
     return {
@@ -110,9 +180,81 @@ export default {
         review: 'Could use some updating',
         isFavorite: true
       }
-      ]
+      ],
+
+      newReview: {
+        reviewer: '',
+        title: '',
+        rating: 1,
+        review:''
+
+      },
+
+      isFormShowing: false,
+
+      ratingFilter: 0
     };
   },
+
+  methods: {
+
+    numberOfStarReviews(rating){
+      return this.reviews.filter(review => review.rating === rating).length
+    },
+
+    starReviewText(rating) {
+
+      if(this.numberOfStarReviews(rating) === 1) {
+        return `${rating} Star Review`;
+      }
+      return `${rating} Star Reviews`;
+
+    },
+
+    resetForm() {
+      this.newReview = {
+        reviewer: '',
+        title: '',
+        rating: 1,
+        review:''
+      };
+
+    },
+    
+    saveReview(event) {
+      // event.preventDefault();  
+      
+      // we can do it this way too
+      // let largestId = 1;
+
+      // for(let i = 0; i < this.reviews.length; i++){
+      //   if(this.reviews[i].id > largestId){
+      //     largestId = this.reviews[i].id;
+      //   }
+      // }
+
+      let largestId = this.reviews[0].id;
+
+      for(let i = 1; i < this.reviews.length; i++){
+        if(this.reviews[i].id > largestId){
+          largestId = this.reviews[i].id;
+        }
+      }
+      
+      this.newReview.id = largestId + 1;
+
+      this.reviews.unshift(this.newReview);
+
+      this.resetForm();
+
+      this.isFormShowing = false;
+    },
+
+    updateFilter(newValue){
+      this.ratingFilter = newValue;
+
+    }
+  }
 };
 </script>
 
@@ -127,6 +269,7 @@ export default {
 }
 .main {
   margin: 1rem 0;
+  padding: 0 10rem;
 }
 
 .well-display {
@@ -143,7 +286,13 @@ export default {
   text-align: center;
   margin: 0.25rem;
   padding: 0.25rem;
+  cursor: pointer;
 }
+
+.well.selected{
+  background-color: rosybrown;
+}
+
 .amount {
   color: darkslategray;
   display: block;
@@ -181,6 +330,35 @@ export default {
 
 .review h4 {
   font-size: 1rem;
+}
+
+
+.form-element {
+  margin-top: 10px;
+}
+
+.form-element label {
+  display: block;
+}
+
+.form-element input,
+.form-element select {
+  height: 30px;
+  width: 300px;
+}
+
+.form-element textarea {
+  height: 60px;
+  width: 300px;
+}
+
+form input[type=button] {
+  width: 100px;
+}
+
+form input[type=submit] {
+  width: 100px;
+  margin-right: 10px;
 }
 
 </style>
