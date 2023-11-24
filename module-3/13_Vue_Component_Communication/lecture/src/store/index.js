@@ -6,7 +6,7 @@ export function createStore() {
     state: {
       name: 'Head First Design Patterns',
       description: 'A brain friendly guide to building extensible and maintainable object-oriented software.',
-      filter: 0,
+      ratingFilter: 0,
       nextReviewId: 1005,
       reviews: [
         {
@@ -55,6 +55,22 @@ export function createStore() {
           favorited: false
         }
       ],
+    },
+
+    mutations: {
+      ADD_REVIEW(state, newReview) {
+
+        newReview.id = state.nextReviewId;
+
+        state.reviews.unshift(newReview);
+
+        state.nextReviewId++;
+
+      },
+
+      UPDATE_RATING_FILTER(state, updateRatingFilter){
+        state.ratingFilter = updateRatingFilter;
+      }
     }
   });
 }
