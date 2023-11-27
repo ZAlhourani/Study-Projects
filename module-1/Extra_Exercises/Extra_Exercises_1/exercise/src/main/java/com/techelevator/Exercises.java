@@ -200,8 +200,16 @@ public class Exercises {
 	 biggerTwo([1, 1], [1, 2]) → [1, 2]
 	 */
 	public int[] biggerTwo(int[] a, int[] b) {
-		return new int[] {};
-	}
+
+		int sumA = a[0] + a[1];
+		int sumB = b[0] + b[1];
+
+		if (sumB > sumA) {
+			return b;
+		}
+		return a;
+		}
+
 
 	/*
 	 13. Given an array of ints of even length, return a new array length 2 containing the middle two elements from
@@ -211,7 +219,9 @@ public class Exercises {
 	 makeMiddle([1, 2]) → [1, 2]
 	 */
 	public int[] makeMiddle(int[] nums) {
-		return new int[] {};
+		int middleLength = nums.length / 2;
+		return new int[] {nums[middleLength -1], nums[middleLength]};
+
 	}
 
 	/*
@@ -221,7 +231,7 @@ public class Exercises {
 	 plusTwo([9, 2], [3, 4]) → [9, 2, 3, 4]
 	 */
 	public int[] plusTwo(int[] a, int[] b) {
-		return new int[] {};
+		return new int[] {a[0], a[1], b[0], b[1]};
 	}
 
 	/*
@@ -232,7 +242,12 @@ public class Exercises {
 	 swapEnds([8, 6, 7, 9, 5]) → [5, 6, 7, 9, 8]
 	 */
 	public int[] swapEnds(int[] nums) {
-		return new int[] {};
+
+		int firstElement = nums[0];
+		nums[0] = nums[nums.length - 1];
+		nums[nums.length-1] = firstElement;
+
+		return nums;
 	}
 
 	/*
@@ -242,8 +257,22 @@ public class Exercises {
 	 more14([1, 1]) → true
 	 */
 	public boolean more14(int[] nums) {
-		return false;
-	}
+
+		int count1 = 0;
+		int count4 = 0;
+
+		for (int i = 0; i < nums.length; i++) {
+			if (nums[i] == 1) {
+				count1++;
+			}
+			if (nums[i] == 4) {
+				count4++;
+			}
+		}
+		return count1 > count4;
+		}
+
+
 
 	/*
 	 17. Given a number n, create and return a new int array of length n, containing the numbers 0, 1, 2, ... n-1.
@@ -255,7 +284,14 @@ public class Exercises {
 	 fizzArray(10) → [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 	 */
 	public int[] fizzArray(int n) {
-		return new int[] {};
+
+		int[] newArray = new int[n];
+
+		for (int i = 0; i < n; i++) {
+
+			newArray[i] = i;
+		}
+		return newArray;
 	}
 
 	/*
@@ -265,7 +301,13 @@ public class Exercises {
 	 only14([1, 1]) → true
 	 */
 	public boolean only14(int[] nums) {
-		return false;
+		for (int i = 0; i < nums.length; i++) {
+
+			if (nums[i] != 1 && nums[i] != 4) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/*
@@ -275,6 +317,13 @@ public class Exercises {
 	 no14([2, 3, 4]) → true
 	 */
 	public boolean no14(int[] nums) {
+
+		for (int i = 0; i <nums.length; i++) {
+			if (nums[i] != 1 && nums[i] !=4) {
+				return true;
+			}
+
+		}
 		return false;
 	}
 

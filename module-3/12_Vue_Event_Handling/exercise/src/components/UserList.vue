@@ -14,8 +14,9 @@
       </thead>
       <tbody>
         <tr>
-          <td>
-            <input type="checkbox" id="selectAll" />
+
+          <td >
+            <input type="checkbox" v-bind:checked="selectedCheckboxes.length === users.length" v-on:change="selectAllChanged" id="selectAll"/>
           </td>
           <td>
             <input type="text" id="firstNameFilter" v-model="filter.firstName" />
@@ -44,44 +45,46 @@
           v-bind:class="{ deactivated: user.status === 'Inactive' }"
         >
           <td>
-            <input type="checkbox" v-bind:id="user.id" v-bind:value="user.id" />
+            <input type="checkbox" v-bind:id="user.id" v-bind:value="user.id" v-model = "selectedCheckboxes">
           </td>
+
           <td>{{ user.firstName }}</td>
           <td>{{ user.lastName }}</td>
           <td>{{ user.username }}</td>
           <td>{{ user.emailAddress }}</td>
           <td>{{ user.status }}</td>
           <td>
-            <button class="btnActivateDeactivate">Activate or Deactivate</button>
+            <button class="btnActivateDeactivate" v-on:click="changeStatus(user)">{{ btnShowStatus(user) }}</button>
           </td>
         </tr>
       </tbody>
     </table>
 
+  
     <div class="all-actions">
-      <button>Activate Users</button>
-      <button>Deactivate Users</button>
-      <button>Delete Users</button>
+      <button v-on:click="activateUsers">Activate Users</button>
+      <button v-on:click="deactivateUsers">Deactivate Users</button>
+      <button v-on:click="deleteUsers">Delete Users</button>
     </div>
 
-    <button>Add New User</button>
+    <button v-on:click.prevent = "isFormShowing = !isFormShowing">Add New User</button>
 
-    <form id="frmAddNewUser">
+    <form v-show="isFormShowing" v-on:submit= "saveNewUser" id="frmAddNewUser">
       <div class="field">
         <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" />
+        <input type="text" id="firstName" v-model="newUser.firstName" name="firstName" />
       </div>
       <div class="field">
         <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" />
+        <input type="text" id="lastName" v-model="newUser.lastName" name="lastName" />
       </div>
       <div class="field">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" />
+        <input type="text" id="username" v-model="newUser.username" name="username" />
       </div>
       <div class="field">
         <label for="emailAddress">Email Address:</label>
-        <input type="text" id="emailAddress" name="emailAddress" />
+        <input type="text" id="emailAddress" v-model="newUser.emailAddress" name="emailAddress" />
       </div>
       <button type="submit" class="btn save">Save User</button>
     </form>
@@ -157,13 +160,109 @@ export default {
           emailAddress: "msmith@foo.com",
           status: "Inactive"
         }
-      ]
+      ],
+
+      isFormShowing: false,
+      selectAllCheckbox: false,
+
+      selectedCheckboxes: [],
+
     };
   },
   methods: {
+  
+    btnShowStatus(user) {
+      if (user.status === 'Active') {
+
+          return 'Deactivate'
+        } 
+        return 'Activate'
+      }, 
+
+
+      changeStatus(user){
+        if (user.status === 'Active'){
+          user.status = 'Inactive'
+        }else{
+          user.status = 'Active'
+        }
+      },
+      
+      
+
     getNextUserId() {
       return this.nextUserId++;
+    },
+
+    saveNewUser(event) {
+
+      event.preventDefault();
+
+      this.newUser.id = this.getNextUserId();
+
+      this.users.unshift(this.newUser);
+
+      this.clearForm();
+
+      this.isFormShowing = false;
+
+    },
+
+    clearForm() {
+      this.newUser = {
+        firstName: "",
+        lastName: "",
+        username: "",
+        emailAddress: "",
+        status: "Active"
+      }
+  },
+
+  resetBoxes(){
+      this.selectedCheckboxes = []
+  },
+
+  activateUsers(){
+      this.users.forEach((user) => {
+        if(this.selectedCheckboxes.includes(user.id)){
+          user.status = 'Active'
+        }
+      })
+      this.resetBoxes()
+    },
+    deactivateUsers(){
+      this.users.forEach((user) => {
+        if(this.selectedCheckboxes.includes(user.id)){
+          user.status = 'Inactive'
+        }
+      })
+      this.resetBoxes()
+    },
+    deleteUsers(){
+      this.users = this.users.filter((user) => {
+        return !this.selectedCheckboxes.includes(user.id)
+      })
+      this.resetBoxes()
+    },
+
+    selectAllChanged(event) {
+      
+      const selectAllCheckbox = event.currentTarget;
+
+      if (selectAllCheckbox.checked) {
+        // check all the boxes
+        this.selectedCheckboxes = [];
+        this.users.forEach(user => {
+          this.selectedCheckboxes.push(user);
+        });
+        
+      } else {
+        // uncheck all the boxes
+        this.selectedCheckboxes = [];
+      }
     }
+
+    
   },
   computed: {
     filteredList() {

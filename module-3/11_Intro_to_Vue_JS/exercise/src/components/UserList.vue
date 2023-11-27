@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+
 
 export default {
   data() {
@@ -71,7 +71,6 @@ export default {
         user.username.toLowerCase().includes(this.search.username.toLowerCase()) &&
         user.emailAddress.toLowerCase().includes(this.search.emailAddress.toLowerCase()) &&
         user.status.includes(this.search.status)
-
       })
 
     },
