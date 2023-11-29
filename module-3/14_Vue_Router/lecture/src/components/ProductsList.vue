@@ -10,6 +10,10 @@
     <tbody>
       <tr v-for="product in $store.state.products" v-bind:key="product.id">
         <td>{{ product.id }}</td>
+        <td>
+          <!-- <a :href="'/products/' + product.id">{{ product.name }}</a> or we can use this instead--> 
+          <router-link :to="{ name: 'product-details', params: {id: product.id} }">{{ product.name }}</router-link>
+        </td>
         <td>{{ product.name }}</td>
         <td>{{ product.reviews.length }}</td>
       </tr>

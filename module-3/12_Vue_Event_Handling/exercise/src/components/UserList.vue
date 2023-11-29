@@ -16,7 +16,7 @@
         <tr>
 
           <td >
-            <input type="checkbox" v-bind:checked="selectedCheckboxes.length === users.length" v-on:change="selectAllChanged" id="selectAll"/>
+            <input type="checkbox" id="selectAll" v-bind:checked="selectedCheckboxes.length === filteredList.length" v-on:change="selectAllChanged"/>
           </td>
           <td>
             <input type="text" id="firstNameFilter" v-model="filter.firstName" />
@@ -62,9 +62,9 @@
 
   
     <div class="all-actions">
-      <button v-on:click="activateUsers">Activate Users</button>
-      <button v-on:click="deactivateUsers">Deactivate Users</button>
-      <button v-on:click="deleteUsers">Delete Users</button>
+      <button :disabled="selectedCheckboxes.length === 0" v-on:click="activateUsers">Activate Users</button>
+      <button :disabled="selectedCheckboxes.length === 0" v-on:click="deactivateUsers">Deactivate Users</button>
+      <button :disabled="selectedCheckboxes.length === 0" v-on:click="deleteUsers">Delete Users</button>
     </div>
 
     <button v-on:click.prevent = "isFormShowing = !isFormShowing">Add New User</button>
@@ -252,8 +252,8 @@ export default {
       if (selectAllCheckbox.checked) {
         // check all the boxes
         this.selectedCheckboxes = [];
-        this.users.forEach(user => {
-          this.selectedCheckboxes.push(user);
+        this.filteredList.forEach(user => {
+          this.selectedCheckboxes.push(user.id);
         });
         
       } else {
