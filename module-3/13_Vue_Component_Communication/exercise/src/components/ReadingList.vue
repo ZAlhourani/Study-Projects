@@ -1,5 +1,28 @@
 <template>
   <div class="book-container">
+    <book-card v-for="book in $store.state.books" v-bind:key="book.isbn" v-bind:book="book"></book-card>
+  </div>
+</template>
+<script>
+import BookCard from './BookCard.vue';
+export default {
+  components: {
+    BookCard
+  }
+}
+</script>
+<style>
+.book-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+</style>
+
+
+
+<!-- <template>
+  <div class="book-container">
 
   </div>
 </template>
@@ -17,4 +40,5 @@ export default {
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
-</style>
+</style> -->
+
