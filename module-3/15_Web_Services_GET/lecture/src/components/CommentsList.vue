@@ -1,10 +1,17 @@
 <template>
   <div class="comments">
+    <div class="comment" v-for="comment in comments" :key="comment.id">
+      <h3>{{ comment.author }}</h3>
+      <p class="postedOn">{{ new Date(comment.postedOn).toDateString() }}</p>
+      <p>{{ comment.body }}</p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+
+  props: ['comments']
 };
 </script>
 
