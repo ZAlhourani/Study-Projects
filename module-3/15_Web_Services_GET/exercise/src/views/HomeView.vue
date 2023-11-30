@@ -12,6 +12,7 @@
 
 <script>
 import TopicList from '../components/TopicList.vue';
+import topicService from '../services/TopicService';
 
 export default {
   components: {
@@ -27,6 +28,11 @@ export default {
     getTopics() {
 
       // TODO - Get data from API and set `topics` property
+
+      topicService.getTopics().then(response => {
+        this.topics = response.data;
+        this.isLoading = false;
+      })
 
     },
     handleErrorResponse() {
